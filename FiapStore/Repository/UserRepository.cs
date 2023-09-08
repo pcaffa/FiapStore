@@ -1,37 +1,85 @@
-﻿using FiapStore.Entity;
+﻿using Dapper;
+using FiapStore.Entity;
 using FiapStore.Interface;
+using System.Data.SqlClient;
 
 namespace FiapStore.Repository
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : DapperRepository<User>, IUserRepository
     {
-        private IList<User> _users = new List<User>();
-
-        public IList<User> ListUser()
+        public UserRepository(IConfiguration configuration) : base(configuration)
         {
-            return _users;
         }
 
-        public User GetUser(int id)
+        public override void Delete(int id)
         {
-            return _users.FirstOrDefault(user => user.Id == id);
+            using var dbconnection = new SqlConnection(ConnectionString);
+            var query = "DELETE FROM User WHERE Id = @Id";
+            dbconnection.Execute(query, new { Id = id});
         }
 
-        public void InsertUser(User user)
+        public override User GetById(int id)
         {
-            _users.Add(user);
+            using var dbconnection = new SqlConnection(ConnectionString);
+            var query = "SELECT * FROM User  WHERE Id = @Id";
+            return dbconnection.Query<User>(query, new { Id = id }).FirstOrDefault();
         }
 
-        public void UpdateUser(User user)
+        public override void Insert(User user)
         {
-            var userUpdate = GetUser(user.Id);
-            if (userUpdate != null)
-                userUpdate.Name = user.Name;
+            using var dbconnection = new SqlConnection(ConnectionString);
+            var query = "INSERT INTO User (Name) VALUES (@Name)";
+            dbconnection.Query(query, user);
         }
 
-        public void DeleteUser(int id)
+        public override IList<User> ListAll()
         {
-            _users.Remove(GetUser(id));
+            using var dbconnection = new SqlConnection(ConnectionString);
+            var query = "SELECT * FROM User";
+            return dbconnection.Query<User>(query).ToList();
+        }
+
+        public override void Update(User user)
+        {
+            using var dbconnection = new SqlConnection(ConnectionString);
+            var query = "UPDATE User SET Name = @Name WHERE Id = @Id";
+            dbconnection.Query(query, user);
+        }
+
+        public User GetUserByOrdes(int id)
+        {
+            using var dbconnection = new SqlConnection(ConnectionString);
+            var query = "SELECT " +
+                        "User.Id, " +
+                        "User.Name, " +
+                        "Order.Id " +
+                        "Order.ProductName " +
+                        "Order.UserId " +
+                        "FROM User " +
+                        "LEFT JOIN Order " +
+                        "ON User.Id = Order.UserId" +
+                        "WHERE User.Id = @Id";
+
+           var result = new Dictionary<int, User>();
+            var parameters = new { Id = id };
+
+            dbconnection.Query<User, Order, User>(query,
+                (user, order) =>
+                {
+                    if (!result.TryGetValue(user.Id, out var userExist))
+                    {
+                        userExist = user;
+                        userExist.OrderList = new List<Order>();
+                        result.Add(user.Id, userExist);
+                    }
+
+                    if (order != null)
+                        userExist.OrderList.Add(order);
+
+                    return userExist;
+                }, parameters, splitOn: "Id");
+
+            return result.Values.FirstOrDefault();
         }
     }
 }

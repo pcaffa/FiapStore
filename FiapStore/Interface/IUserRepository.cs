@@ -2,12 +2,8 @@
 
 namespace FiapStore.Interface
 {
-    public interface IUserRepository
+    public interface IUserRepository : IRepository<User>
     {
-        IList<User> ListUser();
-        User GetUser(int id);
-        void InsertUser(User user);
-        void UpdateUser(User user);
-        void DeleteUser(int id);
+        User GetUserByOrdes(int id);
     }
 }

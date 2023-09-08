@@ -1,4 +1,5 @@
-﻿using FiapStore.Entity;
+﻿using FiapStore.DTO;
+using FiapStore.Entity;
 using FiapStore.Interface;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,46 +10,52 @@ namespace FiapStore.Controllers
     [Route("User")]
     public class UserController : ControllerBase
     {
-            private IUserRepository _userRepository;
+        private IUserRepository _userRepository;
 
-            //construtor
-            public UserController(IUserRepository userRepository)
-            {
-                _userRepository = userRepository; //injeção
-            }
-
-            [HttpGet("obter-usuario-por-id/{id}")]
-            public IActionResult GetUser(int id)
-            {
-                return Ok(_userRepository.GetUser(id));
-            }
+        public UserController(IUserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
 
 
-            [HttpGet]
-            public IActionResult ListUsers()
-            {
-                return Ok(_userRepository.ListUser());
-            }
+        [HttpGet("obter-todos-com-pedido/{id}")]
+        public IActionResult UserListWithOrder([FromRoute] int id)
+        {
+            return Ok(_userRepository.GetUserByOrdes(id));
+        }
 
-            [HttpPost]
-            public IActionResult InsertUser(User user)
-            {
-                _userRepository.InsertUser(user);
-                return Ok("Usuário criado com sucesso!");
-            }
+        [HttpGet("obter-usuario-por-id/{id}")]
+        public IActionResult GetUser(int id)
+        {
+            return Ok(_userRepository.GetById(id));
+        }
 
-            [HttpPut]
-            public IActionResult UpdateUser(User user)
-            {
-                _userRepository.UpdateUser(user);
-                return Ok("Usuário alterado com sucesso!");
-            }
 
-            [HttpDelete("{id}")]
-            public IActionResult DeleteUser(int id)
-            {
-                _userRepository.DeleteUser(id);
-                return Ok("Usuário deletado com sucesso!");
-            }
+        [HttpGet("obter-todos-usuario")]
+        public IActionResult UserList()
+        {
+            return Ok(_userRepository.ListAll());
+        }
+
+        [HttpPost]
+        public IActionResult InsertUser(InsertUserDTO userDTO)
+        {
+            _userRepository.Insert(new User(userDTO));
+            return Ok("Usuário criado com sucesso!");
+        }
+
+        [HttpPut]
+        public IActionResult UpdateUser(UpdateUserDTO userDTO)
+        {
+            _userRepository.Update(new User(userDTO));
+            return Ok("Usuário alterado com sucesso!");
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteUser(int id)
+        {
+            _userRepository.Delete(id);
+            return Ok("Usuário deletado com sucesso!");
+        }
     }
 }
