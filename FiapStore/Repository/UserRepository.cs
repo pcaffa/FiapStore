@@ -14,35 +14,35 @@ namespace FiapStore.Repository
         public override void Delete(int id)
         {
             using var dbconnection = new SqlConnection(ConnectionString);
-            var query = "DELETE FROM User WHERE Id = @Id";
+            var query = "DELETE FROM [User] WHERE Id = @Id";
             dbconnection.Execute(query, new { Id = id});
         }
 
         public override User GetById(int id)
         {
             using var dbconnection = new SqlConnection(ConnectionString);
-            var query = "SELECT * FROM User  WHERE Id = @Id";
+            var query = "SELECT * FROM [User]  WHERE Id = @Id";
             return dbconnection.Query<User>(query, new { Id = id }).FirstOrDefault();
         }
 
         public override void Insert(User user)
         {
             using var dbconnection = new SqlConnection(ConnectionString);
-            var query = "INSERT INTO User (Name) VALUES (@Name)";
+            var query = "INSERT INTO [User] (Name) VALUES (@Name)";
             dbconnection.Query(query, user);
         }
 
         public override IList<User> ListAll()
         {
             using var dbconnection = new SqlConnection(ConnectionString);
-            var query = "SELECT * FROM User";
+            var query = "SELECT * FROM [User]";
             return dbconnection.Query<User>(query).ToList();
         }
 
         public override void Update(User user)
         {
             using var dbconnection = new SqlConnection(ConnectionString);
-            var query = "UPDATE User SET Name = @Name WHERE Id = @Id";
+            var query = "UPDATE [User] SET Name = @Name WHERE Id = @Id";
             dbconnection.Query(query, user);
         }
 
@@ -50,15 +50,15 @@ namespace FiapStore.Repository
         {
             using var dbconnection = new SqlConnection(ConnectionString);
             var query = "SELECT " +
-                        "User.Id, " +
-                        "User.Name, " +
-                        "Order.Id " +
-                        "Order.ProductName " +
-                        "Order.UserId " +
-                        "FROM User " +
-                        "LEFT JOIN Order " +
-                        "ON User.Id = Order.UserId" +
-                        "WHERE User.Id = @Id";
+                            "U.Id, " +
+	                        "U.Name, " + 
+	                        "O.Id, " +
+	                        "O.ProductName, " +
+	                        "O.UserId " +
+                            "FROM[User] U " +
+                        "LEFT JOIN[Order] O " +
+                            "ON U.Id = O.UserId " +
+                        "WHERE U.Id = @Id";
 
            var result = new Dictionary<int, User>();
             var parameters = new { Id = id };
