@@ -11,7 +11,7 @@ namespace FiapStore.Configuration
         {
             builder.ToTable("Order");
             builder.HasKey(o => o.Id);
-            builder.Property(o => o.Id).HasColumnType("INT").ValueGeneratedNever().UseIdentityColumn();
+            builder.Property(o => o.Id).HasColumnType("INT").UseIdentityColumn();
             builder.Property(o => o.ProductName).HasColumnType("VARCHAR(100)");
             builder.HasOne(o => o.User)
                         .WithMany(u => u.OrderList)

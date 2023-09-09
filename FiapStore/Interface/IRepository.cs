@@ -4,8 +4,8 @@
     {
         IList<T> ListAll();
         T GetById(int id);
-        void Insert(T user);
-        void Update(T user);
+        void Insert(T entity);
+        void Update(T entity);
         void Delete(int id);
     }
 }
