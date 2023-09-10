@@ -11,10 +11,12 @@ namespace FiapStore.Controllers
     public class UserController : ControllerBase
     {
         private IUserRepository _userRepository;
+        private ILogger<UserController> _logger;
 
-        public UserController(IUserRepository userRepository)
+        public UserController(IUserRepository userRepository, ILogger<UserController> logger)
         {
             _userRepository = userRepository;
+            _logger = logger;
         }
 
 
@@ -27,6 +29,7 @@ namespace FiapStore.Controllers
         [HttpGet("obter-usuario-por-id/{id}")]
         public IActionResult GetUser(int id)
         {
+            _logger.LogInformation("Executando método GetUser.");
             return Ok(_userRepository.GetById(id));
         }
 

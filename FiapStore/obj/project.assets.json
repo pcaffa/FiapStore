@@ -4161,6 +4161,7 @@
       "Microsoft.EntityFrameworkCore.Design >= 7.0.10",
       "Microsoft.EntityFrameworkCore.SqlServer >= 7.0.10",
       "Microsoft.EntityFrameworkCore.Tools >= 7.0.10",
+      "Microsoft.Extensions.Logging >= 7.0.0",
       "Swashbuckle.AspNetCore >= 6.5.0",
       "System.Data.SqlClient >= 4.8.5"
     ]
@@ -4237,6 +4238,10 @@
             "suppressParent": "All",
             "target": "Package",
             "version": "[7.0.10, )"
+          },
+          "Microsoft.Extensions.Logging": {
+            "target": "Package",
+            "version": "[7.0.0, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
