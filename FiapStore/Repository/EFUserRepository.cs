@@ -22,5 +22,11 @@ namespace FiapStore.Repository
                         return u;
                     }).FirstOrDefault();
         }
+
+        public User GetByUserNamePassword(string userName, string password)
+        {
+            return _context.User.FirstOrDefault(u => u.UserName == userName && u.Passaword == password);
+
+        }
     }
 }

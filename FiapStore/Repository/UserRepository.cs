@@ -81,5 +81,10 @@ namespace FiapStore.Repository
 
             return result.Values.FirstOrDefault();
         }
+
+        public User GetByUserNamePassword(string userName, string password)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

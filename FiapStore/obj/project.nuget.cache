@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "JQlaJsKX6IELlBkY45me6OTazaasBytOfA2/ompkMmxAKpPrG1iMVGgXG14mdw2TBtd7GMgNV/d9x2M68+75tA==",
+  "dgSpecHash": "0a2XIIr0LrR96yddohfb2B8seemuoWw7tthBC/usz5mTZyJkZ9dxNufQyzKTahhFkhcg7Vnp9k0Y/GdTlJmmDw==",
   "success": true,
   "projectFilePath": "C:\\Users\\caffa\\OneDrive\\Documentos\\Fiap\\FiapStore\\FiapStore\\FiapStore.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\caffa\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
     "C:\\Users\\caffa\\.nuget\\packages\\dapper\\2.0.151\\dapper.2.0.151.nupkg.sha512",
     "C:\\Users\\caffa\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
+    "C:\\Users\\caffa\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\7.0.10\\microsoft.aspnetcore.authentication.jwtbearer.7.0.10.nupkg.sha512",
     "C:\\Users\\caffa\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.10\\microsoft.aspnetcore.openapi.7.0.10.nupkg.sha512",
     "C:\\Users\\caffa\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\caffa\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",

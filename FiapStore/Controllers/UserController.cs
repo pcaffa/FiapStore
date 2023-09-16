@@ -1,6 +1,8 @@
 ﻿using FiapStore.DTO;
 using FiapStore.Entity;
+using FiapStore.Enums;
 using FiapStore.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FiapStore.Controllers
@@ -19,13 +21,15 @@ namespace FiapStore.Controllers
             _logger = logger;
         }
 
-
+        [Authorize]
         [HttpGet("obter-todos-com-pedido/{id}")]
         public IActionResult UserListWithOrder([FromRoute] int id)
         {
             return Ok(_userRepository.GetUserByOrdes(id));
         }
 
+        [Authorize]
+        [Authorize(Roles = Permission.Funcionario)]
         [HttpGet("obter-usuario-por-id/{id}")]
         public IActionResult GetUser(int id)
         {
@@ -33,13 +37,16 @@ namespace FiapStore.Controllers
             return Ok(_userRepository.GetById(id));
         }
 
-
+        [Authorize]
+        [Authorize(Roles = Permission.Administrador)]
         [HttpGet("obter-todos-usuario")]
         public IActionResult UserList()
         {
             return Ok(_userRepository.ListAll());
         }
 
+        [Authorize]
+        [Authorize(Roles = $"{Permission.Administrador}, {Permission.Funcionario}")]
         [HttpPost]
         public IActionResult InsertUser(InsertUserDTO userDTO)
         {
@@ -47,6 +54,7 @@ namespace FiapStore.Controllers
             return Ok("Usuário criado com sucesso!");
         }
 
+        [AllowAnonymous]
         [HttpPut]
         public IActionResult UpdateUser(UpdateUserDTO userDTO)
         {
